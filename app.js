@@ -4,16 +4,21 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
 const _ = require("lodash");
+const keys = require(__dirname + "/config.js");
 
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect(
-  "mongodb+srv://karthikwrk05:QYVYyTwbCJ6kQJBP@cluster0.aqlnrgj.mongodb.net/todolistDB"
-);
-
+const config = keys.getKeys();
+const url =
+  "mongodb+srv://" +
+  config.username +
+  ":" +
+  config.password +
+  "@cluster0.aqlnrgj.mongodb.net/todolistDB";
+mongoose.connect(url);
 const itemsScmena = mongoose.Schema({
   name: String,
 });
