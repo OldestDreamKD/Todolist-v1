@@ -4,19 +4,20 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const app = express();
 const _ = require("lodash");
-const keys = require(__dirname + "/config.js");
+require("dotenv").config();
 
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-const config = keys.getKeys();
+const mongousername = process.env.MONGO_USERNAME;
+const mongopassword = process.env.MONGO_PASSWORD;
 const url =
   "mongodb+srv://" +
-  config.username +
+  mongousername +
   ":" +
-  config.password +
+  mongopassword +
   "@cluster0.aqlnrgj.mongodb.net/todolistDB";
 mongoose.connect(url);
 const itemsScmena = mongoose.Schema({
